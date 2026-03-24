@@ -1,0 +1,138 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#f6f8f5',
+          100: '#e8f0e2',
+          200: '#d4e0c7',
+          300: '#b8c5a6',
+          400: '#9caa8a',
+          500: '#7f9171',
+          600: '#6b7a60',
+          700: '#586450',
+          800: '#475141',
+          900: '#3a4237',
+        },
+        secondary: {
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569',
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
+        },
+        green: {
+          50: '#f6f8f5',
+          100: '#e8f0e2',
+          200: '#d4e0c7',
+          300: '#b8c5a6',
+          400: '#9caa8a',
+          500: '#7f9171',
+          600: '#6b7a60',
+          700: '#586450',
+          800: '#475141',
+          900: '#3a4237',
+        },
+        cream: {
+          50: '#fefef9',
+          100: '#faf5f0',
+          200: '#f5f2e9',
+          300: '#ede7de',
+          400: '#e3d9cc',
+          500: '#d4c4b0',
+          600: '#c4b198',
+          700: '#b09d85',
+          800: '#8b7a6b',
+          900: '#6f645a',
+        },
+        gold: {
+          50: '#fffef7',
+          100: '#fef9e7',
+          200: '#fcf0c8',
+          300: '#f8e197',
+          400: '#f2cc60',
+          500: '#d4af37',
+          600: '#c19b2a',
+          700: '#a18023',
+          800: '#84691f',
+          900: '#6d551c',
+        },
+      },
+      fontFamily: {
+        'serif': ['Playfair Display', 'Georgia', 'serif'],
+        'sans': ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        'script': ['Dancing Script', 'cursive'],
+        'elegant': ['Cormorant Garamond', 'serif'],
+        'arabic': ['Amiri', 'serif'],
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'fade-in-up': 'fadeInUp 0.6s ease-out',
+        'slide-in-left': 'slideInLeft 0.5s ease-out',
+        'slide-in-right': 'slideInRight 0.5s ease-out',
+        'scale-in': 'scaleIn 0.4s ease-out',
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-soft': 'pulseSoft 2s infinite',
+        'shimmer': 'shimmer 2s infinite',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideInLeft: {
+          '0%': { opacity: '0', transform: 'translateX(-50px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        slideInRight: {
+          '0%': { opacity: '0', transform: 'translateX(50px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        scaleIn: {
+          '0%': { opacity: '0', transform: 'scale(0.9)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+        pulseSoft: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.7' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'shimmer': 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
+      },
+      backdropBlur: {
+        xs: '2px',
+      },
+    },
+  },
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/aspect-ratio'),
+  ],
+}

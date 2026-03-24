@@ -1,0 +1,581 @@
+/* =============================================================================
+   MODERN MEDIA QUERIES & CONTAINER QUERIES
+   Advanced Responsive Design with Latest CSS Features
+   ============================================================================= */
+
+/* =============================================================================
+   CONTAINER QUERIES (Modern CSS)
+   ============================================================================= */
+
+@supports (container-type: inline-size) {
+  /* Container query setup */
+  .container-query {
+    container-type: inline-size;
+  }
+
+  /* Card layouts with container queries */
+  @container (min-width: 20rem) {
+    .card-responsive {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--fluid-space-md);
+      align-items: center;
+    }
+  }
+
+  @container (min-width: 30rem) {
+    .card-responsive {
+      grid-template-columns: 1fr 2fr;
+      padding: var(--fluid-space-lg);
+    }
+    
+    .card-responsive .card-icon {
+      width: 4rem;
+      height: 4rem;
+      font-size: 1.5rem;
+    }
+  }
+
+  @container (min-width: 40rem) {
+    .card-responsive {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    
+    .navigation-responsive {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  /* Gallery with container queries */
+  @container (min-width: 20rem) {
+    .gallery-responsive {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @container (min-width: 30rem) {
+    .gallery-responsive {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @container (min-width: 50rem) {
+    .gallery-responsive {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* Form layouts with container queries */
+  @container (min-width: 25rem) {
+    .form-responsive {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--fluid-space-md);
+    }
+    
+    .form-full-width {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @container (min-width: 35rem) {
+    .form-responsive {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+}
+
+/* =============================================================================
+   MODERN MEDIA QUERIES
+   ============================================================================= */
+
+/* Viewport-based queries */
+@media (width >= 20rem) {
+  .responsive-text {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+  }
+}
+
+@media (width >= 48rem) {
+  .responsive-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--fluid-space-lg);
+  }
+}
+
+@media (width >= 64rem) {
+  .responsive-layout {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--fluid-space-xl);
+  }
+}
+
+/* Aspect ratio queries */
+@media (aspect-ratio >= 16/9) {
+  .hero-landscape {
+    background-position: center center;
+    background-size: cover;
+  }
+}
+
+@media (aspect-ratio <= 4/3) {
+  .hero-portrait {
+    padding-block: var(--fluid-space-3xl);
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+}
+
+/* Orientation queries */
+@media (orientation: landscape) and (max-height: 500px) {
+  .hero-mobile-landscape {
+    min-height: 100vh;
+    padding-block: var(--fluid-space-md);
+  }
+  
+  .hero-mobile-landscape .hero-title {
+    font-size: var(--fluid-text-3xl);
+  }
+}
+
+@media (orientation: portrait) {
+  .content-portrait {
+    padding-inline: var(--fluid-space-lg);
+  }
+}
+
+/* Interaction media queries */
+@media (hover: hover) and (pointer: fine) {
+  /* Desktop/laptop with mouse */
+  .hover-effects {
+    transition: all var(--transition-normal);
+  }
+  
+  .hover-effects:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-heavy);
+  }
+  
+  .tooltip-hover {
+    position: relative;
+  }
+  
+  .tooltip-hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text-primary);
+    color: var(--text-on-dark);
+    padding: var(--fluid-space-xs) var(--fluid-space-sm);
+    border-radius: var(--radius-sm);
+    font-size: var(--fluid-text-xs);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+    z-index: var(--z-tooltip);
+  }
+  
+  .tooltip-hover:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-8px);
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  /* Touch devices */
+  .touch-optimized {
+    min-height: 44px;
+    min-width: 44px;
+    padding: var(--fluid-space-md);
+  }
+  
+  .touch-feedback:active {
+    transform: scale(0.95);
+    background: var(--pista-light);
+  }
+  
+  /* Remove hover states on touch devices */
+  .no-touch-hover:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+@media (pointer: coarse) {
+  /* Any device with coarse pointer (touch) */
+  .coarse-pointer {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+}
+
+/* Display quality queries */
+@media (-webkit-min-device-pixel-ratio: 2),
+       (min-resolution: 192dpi),
+       (min-resolution: 2dppx) {
+  /* High DPI displays */
+  .high-dpi-image {
+    background-image: url('image@2x.jpg');
+  }
+  
+  .crisp-edges {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 3),
+       (min-resolution: 288dpi),
+       (min-resolution: 3dppx) {
+  /* Very high DPI displays */
+  .high-dpi-image {
+    background-image: url('image@3x.jpg');
+  }
+}
+
+/* Color scheme queries */
+@media (prefers-color-scheme: dark) {
+  .auto-dark-mode {
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --cream-primary: #1a1a1a;
+    --beige-light: #2d2d2d;
+    --pista-primary: #a8bb96;
+    --shadow-light: rgba(0, 0, 0, 0.5);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .auto-light-mode {
+    /* Default light mode colors */
+  }
+}
+
+/* Contrast queries */
+@media (prefers-contrast: high) {
+  .high-contrast {
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    border: 2px solid currentColor;
+    background: #ffffff;
+  }
+  
+  .button-high-contrast {
+    border: 3px solid currentColor;
+    font-weight: bold;
+  }
+}
+
+@media (prefers-contrast: low) {
+  .low-contrast {
+    opacity: 0.8;
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Motion queries */
+@media (prefers-reduced-motion: reduce) {
+  .motion-safe {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .motion-safe * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .parallax-effect {
+    transform: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .motion-ok {
+    animation: slideIn 0.6s ease-out;
+    transition: all var(--transition-normal);
+  }
+}
+
+/* Data usage queries */
+@media (prefers-reduced-data: reduce) {
+  .data-saver {
+    background-image: none;
+  }
+  
+  .data-saver img {
+    display: none;
+  }
+  
+  .data-saver video {
+    display: none;
+  }
+}
+
+/* =============================================================================
+   ADVANCED RESPONSIVE PATTERNS
+   ============================================================================= */
+
+/* Intrinsic web design patterns */
+.intrinsic-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: var(--fluid-space-lg);
+}
+
+/* RAM (Repeat, Auto, MinMax) pattern */
+.ram-pattern {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--fluid-space-md);
+}
+
+/* Sidebar pattern */
+.sidebar-layout {
+  display: grid;
+  grid-template-columns: minmax(250px, 30%) 1fr;
+  gap: var(--fluid-space-lg);
+}
+
+@media (width < 48rem) {
+  .sidebar-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Stack pattern */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fluid-space-md);
+}
+
+.stack > * {
+  margin-block: 0;
+}
+
+.stack-horizontal {
+  flex-direction: row;
+  align-items: center;
+}
+
+@media (width < 48rem) {
+  .stack-horizontal {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Pancake pattern */
+.pancake-layout {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+/* Switcher pattern */
+.switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fluid-space-lg);
+}
+
+.switcher > * {
+  flex-grow: 1;
+  flex-basis: calc((30rem - 100%) * 999);
+}
+
+/* Cover pattern */
+.cover {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.cover > * {
+  margin-block: var(--fluid-space-sm);
+}
+
+.cover > :first-child:not(.cover-centered) {
+  margin-block-start: 0;
+}
+
+.cover > :last-child:not(.cover-centered) {
+  margin-block-end: 0;
+}
+
+.cover > .cover-centered {
+  margin-block: auto;
+}
+
+/* =============================================================================
+   BREAKPOINT-SPECIFIC UTILITIES
+   ============================================================================= */
+
+/* Extra small devices */
+@media (width <= 20rem) {
+  .xs-only\:block { display: block; }
+  .xs-only\:hidden { display: none; }
+  .xs-only\:text-sm { font-size: var(--fluid-text-sm); }
+}
+
+/* Small devices */
+@media (width >= 36rem) and (width < 48rem) {
+  .sm-only\:block { display: block; }
+  .sm-only\:hidden { display: none; }
+  .sm-only\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Medium devices */
+@media (width >= 48rem) and (width < 64rem) {
+  .md-only\:block { display: block; }
+  .md-only\:hidden { display: none; }
+  .md-only\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Large devices */
+@media (width >= 64rem) and (width < 80rem) {
+  .lg-only\:block { display: block; }
+  .lg-only\:hidden { display: none; }
+  .lg-only\:grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Extra large devices */
+@media (width >= 80rem) {
+  .xl\:block { display: block; }
+  .xl\:hidden { display: none; }
+  .xl\:grid-cols-5 { grid-template-columns: repeat(5, 1fr); }
+  .xl\:text-center { text-align: center; }
+}
+
+/* =============================================================================
+   PRINT QUERIES
+   ============================================================================= */
+
+@media print {
+  /* Print-specific styles */
+  .print\:hidden { display: none; }
+  .print\:block { display: block; }
+  
+  .print\:break-before { break-before: page; }
+  .print\:break-after { break-after: page; }
+  .print\:break-inside-avoid { break-inside: avoid; }
+  
+  /* Optimize for print */
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  .container {
+    max-width: none;
+    padding: 0;
+  }
+  
+  .section {
+    padding-block: 1rem;
+  }
+  
+  /* Hide interactive elements */
+  button,
+  .btn,
+  .nav-toggle,
+  .lightbox {
+    display: none !important;
+  }
+  
+  /* Ensure readability */
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+  
+  h1 { font-size: 24pt; }
+  h2 { font-size: 18pt; }
+  h3 { font-size: 16pt; }
+  h4 { font-size: 14pt; }
+  
+  /* Add page numbers */
+  @page {
+    margin: 2cm;
+    @bottom-right {
+      content: counter(page);
+    }
+  }
+}
+
+/* =============================================================================
+   FORCED COLORS MODE (Windows High Contrast)
+   ============================================================================= */
+
+@media (forced-colors: active) {
+  .forced-colors {
+    background: ButtonFace;
+    color: ButtonText;
+    border: 1px solid ButtonText;
+  }
+  
+  .forced-colors-button {
+    background: ButtonFace;
+    color: ButtonText;
+    border: 2px solid ButtonText;
+  }
+  
+  .forced-colors-button:hover {
+    background: SelectedItem;
+    color: SelectedItemText;
+  }
+  
+  .forced-colors-link {
+    color: LinkText;
+  }
+  
+  .forced-colors-link:visited {
+    color: VisitedText;
+  }
+}
+
+/* =============================================================================
+   UTILITIES FOR SPECIFIC DEVICE TYPES
+   ============================================================================= */
+
+/* iPhone X and similar with notch */
+@supports (padding: max(0px)) {
+  .safe-area-inset {
+    padding-left: max(var(--fluid-space-md), env(safe-area-inset-left));
+    padding-right: max(var(--fluid-space-md), env(safe-area-inset-right));
+  }
+  
+  .safe-area-top {
+    padding-top: max(var(--fluid-space-md), env(safe-area-inset-top));
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: max(var(--fluid-space-md), env(safe-area-inset-bottom));
+  }
+}
+
+/* Foldable devices */
+@media (spanning: single-fold-vertical) {
+  .dual-screen {
+    grid-template-columns: 1fr 1fr;
+    column-gap: env(fold-width);
+  }
+}
+
+@media (spanning: single-fold-horizontal) {
+  .dual-screen-horizontal {
+    grid-template-rows: 1fr 1fr;
+    row-gap: env(fold-height);
+  }
+}
