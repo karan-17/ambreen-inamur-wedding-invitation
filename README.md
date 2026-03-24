@@ -124,7 +124,7 @@ Gold:
 **Hosts**: Mr. Aftab Anwar & Mrs. Karishma Begum
 - **Address**: 1335-A, Hindpiri, Banai Raja Lane, Ranchi, Jharkhand - 834001
 - **Phone**: 9650481417 | 9899578609 | 8448281417
-- **RSVP**: Adnan, Anwar's & Imam's
+- **RSVP**: Adnan Anwar's & Imam's
 
 ## 🔧 Customization
 

@@ -153,7 +153,7 @@ export const CoverPage: React.FC = () => {
               transition={{ delay: 1.3, type: 'spring' }}
               className="font-script text-5xl md:text-7xl lg:text-8xl bg-gradient-to-r from-green-600 via-green-500 to-emerald-600 bg-clip-text text-transparent"
             >
-              Inamur
+              Inam
             </motion.h1>
           </div>
 

@@ -36,7 +36,7 @@ export default function HomePage() {
       description: 'Henna celebration with music and dance'
     },
     {
-      title: 'Nikah & Reception',
+      title: 'Nikah',
       date: 'Wednesday, 22nd April 2026', 
       time: 'Baraat: 8:00 PM | Nikah: 8:30 PM | Dinner: 9:00 PM',
       venue: 'PUJA SHREE MARRIAGE HOUSE',
@@ -225,7 +225,7 @@ export default function HomePage() {
                   transition={{ delay: 1.3, type: 'spring' }}
                   className="font-script text-5xl md:text-7xl lg:text-8xl bg-gradient-to-r from-green-600 via-green-500 to-emerald-600 bg-clip-text text-transparent"
                 >
-                  Inamur
+                  Inam
                 </motion.h1>
               </div>
 
@@ -755,13 +755,13 @@ export default function HomePage() {
 
                     <div className="border-t pt-4">
                       <p className="font-medium text-gray-800 mb-2">R.S.V.P :</p>
-                      <p className="text-gray-600">Adnan</p>
-                      <p className="text-gray-600">Anwar&apos;s & Imam&apos;s</p>
+                      <p className="text-gray-600">Adnan Anwar&apos;s & Imam&apos;s</p>
+                      {/* <p className="text-gray-600">Anwar&apos;s & Imam&apos;s</p> */}
                     </div>
 
                     <div className="border-t pt-4">
                       <p className="font-medium text-gray-800 mb-2">Blessed by:</p>
-                      <p className="text-gray-600">Mrs. Kaniza Begum W/o Lt. Mr. Khurshid Anwar (Grandmother)</p>
+                      <p className="text-gray-600">Mrs. Kaniza Begum W/o Lt. Mr. Khurshid Anwar</p>
                     </div>
                   </div>
                 </CardContent>

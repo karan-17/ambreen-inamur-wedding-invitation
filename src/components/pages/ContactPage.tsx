@@ -77,7 +77,7 @@ export const ContactPage: React.FC = () => {
 
                   <div className="border-t pt-4">
                     <p className="font-medium text-gray-800 mb-2">Blessed by:</p>
-                    <p className="text-gray-600">Mrs. Kaniza Begum W/o Lt. Mr. Khurshid Anwar (Grandmother)</p>
+                    <p className="text-gray-600">Mrs. Kaniza Begum W/o Lt. Mr. Khurshid Anwar</p>
                   </div>
                 </div>
               </CardContent>

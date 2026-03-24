@@ -21,7 +21,7 @@ export const EventsPage: React.FC = () => {
       description: 'Henna celebration with music and dance'
     },
     {
-      title: 'Nikah & Reception',
+      title: 'Nikah',
       date: 'Wednesday, 22nd April 2026', 
       time: 'Baraat: 8:00 PM | Nikah: 8:30 PM | Dinner: 9:00 PM',
       venue: 'PUJA SHREE MARRIAGE HOUSE',
