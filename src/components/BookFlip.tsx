@@ -149,7 +149,7 @@ export const BookFlip: React.FC<BookFlipProps> = ({ pages, className = '' }) => 
     return unsubscribe
   }, [dragProgress, isFlipping])
 
-  const startFlip = (direction: 'left' | 'right') => {
+  const startFlip = useCallback((direction: 'left' | 'right') => {
     if ((direction === 'right' && !canFlipNext) || (direction === 'left' && !canFlipPrev)) {
       return
     }
@@ -157,9 +157,9 @@ export const BookFlip: React.FC<BookFlipProps> = ({ pages, className = '' }) => 
     setIsFlipping(true)
     setDragDirection(direction)
     setFlipProgress(0)
-  }
+  }, [canFlipNext, canFlipPrev])
 
-  const completeFlip = async (direction: 'left' | 'right') => {
+  const completeFlip = useCallback(async (direction: 'left' | 'right') => {
     // Animate to completion
     await controls.start({
       x: direction === 'right' ? -400 : 400,
@@ -185,7 +185,7 @@ export const BookFlip: React.FC<BookFlipProps> = ({ pages, className = '' }) => 
     setDragDirection(null)
     
     controls.set({ x: 0 })
-  }
+  }, [canFlipNext, canFlipPrev, controls, dragX])
 
   const cancelFlip = async () => {
     await controls.start({

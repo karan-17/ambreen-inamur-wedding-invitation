@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
@@ -92,34 +92,33 @@ interface PageFlipBookProps {
 
 export const PageFlipBook: React.FC<PageFlipBookProps> = ({ pages, className = '' }) => {
   const [currentPage, setCurrentPage] = useState(0)
-  const [direction, setDirection] = useState<'next' | 'prev' | null>(null)
   const [isFlipping, setIsFlipping] = useState(false)
 
   const totalPages = pages.length
 
-  const nextPage = () => {
+  const nextPage = useCallback(() => {
     if (currentPage < totalPages - 1 && !isFlipping) {
       setIsFlipping(true)
-      setDirection('next')
+      // setDirection('next') // Removed as direction is not used
       setCurrentPage(prev => prev + 1)
       setTimeout(() => {
         setIsFlipping(false)
-        setDirection(null)
+        // setDirection(null) // Removed as direction is not used
       }, 800)
     }
-  }
+  }, [currentPage, totalPages, isFlipping])
 
-  const prevPage = () => {
+  const prevPage = useCallback(() => {
     if (currentPage > 0 && !isFlipping) {
       setIsFlipping(true)
-      setDirection('prev')
+      // setDirection('prev') // Removed as direction is not used
       setCurrentPage(prev => prev - 1)
       setTimeout(() => {
         setIsFlipping(false)
-        setDirection(null)
+        // setDirection(null) // Removed as direction is not used
       }, 800)
     }
-  }
+  }, [currentPage, isFlipping])
 
   // Touch/swipe support
   const [touchStart, setTouchStart] = useState<number | null>(null)
@@ -160,7 +159,7 @@ export const PageFlipBook: React.FC<PageFlipBookProps> = ({ pages, className = '
 
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [currentPage, isFlipping])
+  }, [currentPage, isFlipping, nextPage, prevPage])
 
   return (
     <div className={`relative w-full min-h-screen ${className}`}>
@@ -217,11 +216,11 @@ export const PageFlipBook: React.FC<PageFlipBookProps> = ({ pages, className = '
                   onClick={() => {
                     if (index !== currentPage && !isFlipping) {
                       setIsFlipping(true)
-                      setDirection(index > currentPage ? 'next' : 'prev')
+                      // setDirection(index > currentPage ? 'next' : 'prev') // Removed as direction is not used
                       setCurrentPage(index)
                       setTimeout(() => {
                         setIsFlipping(false)
-                        setDirection(null)
+                        // setDirection(null) // Removed as direction is not used
                       }, 800)
                     }
                   }}

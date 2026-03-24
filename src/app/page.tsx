@@ -340,12 +340,12 @@ export default function HomePage() {
                           { value: countdown.hours, label: 'Hours', color: 'from-gold-500 to-gold-600', icon: '⏰' },
                           { value: countdown.minutes, label: 'Minutes', color: 'from-green-600 to-green-700', icon: '⏱️' },
                           { value: countdown.seconds, label: 'Seconds', color: 'from-emerald-500 to-emerald-700', icon: '⚡' },
-                        ].map((item, index) => (
+                        ].map((item, _index) => (
                           <motion.div
                             key={item.label}
                             initial={{ scale: 0, rotateY: 180, opacity: 0 }}
                             animate={{ scale: 1, rotateY: 0, opacity: 1 }}
-                            transition={{ delay: 2.3 + index * 0.15, type: 'spring', stiffness: 100 }}
+                            transition={{ delay: 2.3 + _index * 0.15, type: 'spring', stiffness: 100 }}
                             whileHover={{ 
                               scale: 1.05, 
                               rotateY: 5,
@@ -409,7 +409,7 @@ export default function HomePage() {
                         { label: 'Hours', color: 'from-gold-500 to-gold-600', icon: '⏰' },
                         { label: 'Minutes', color: 'from-green-600 to-green-700', icon: '⏱️' },
                         { label: 'Seconds', color: 'from-emerald-500 to-emerald-700', icon: '⚡' },
-                      ].map((item, index) => (
+                      ].map((item, _index) => (
                         <div
                           key={item.label}
                           className="text-center relative"

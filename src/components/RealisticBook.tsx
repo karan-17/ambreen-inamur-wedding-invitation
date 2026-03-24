@@ -1,14 +1,14 @@
 'use client'
 
 import React, { useState, useRef, useEffect, useCallback } from 'react'
-import { motion, useMotionValue, useTransform, PanInfo, useAnimation, AnimatePresence } from 'framer-motion'
+import { motion, useMotionValue, useTransform, PanInfo, useAnimation, animate } from 'framer-motion'
 
 interface PageProps {
   children: React.ReactNode
   pageNumber: number
 }
 
-const Page: React.FC<PageProps> = ({ children, pageNumber }) => (
+const Page: React.FC<PageProps> = ({ children, pageNumber: _pageNumber }) => (
   <div className="w-full h-full bg-gradient-to-br from-cream-50 to-white relative overflow-hidden">
     {/* Page texture */}
     <div 
@@ -37,7 +37,7 @@ export const RealisticBook: React.FC<RealisticBookProps> = ({ pages, className =
   
   const containerRef = useRef<HTMLDivElement>(null)
   const flipProgress = useMotionValue(0)
-  const dragX = useMotionValue(0)
+  // const dragX = useMotionValue(0) // Currently unused
   const controls = useAnimation()
   
   const totalSpreads = Math.ceil(pages.length / 2)
@@ -57,15 +57,12 @@ export const RealisticBook: React.FC<RealisticBookProps> = ({ pages, className =
     setIsFlipping(true)
     setFlipDirection(direction)
     
-    // Animate flip progress from 0 to 1
-    await controls.start({
-      flipProgress: 1,
-      transition: {
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94] // Custom easing for natural page turn
-      }
+    // Animate flip progress from 0 to 1 using motion value
+    await animate(flipProgress, 1, {
+      duration: 0.8,
+      ease: [0.25, 0.46, 0.45, 0.94] // Custom easing for natural page turn
     })
-  }, [isFlipping, canFlipNext, canFlipPrev, controls])
+  }, [isFlipping, canFlipNext, canFlipPrev, flipProgress])
 
   const completeFlip = useCallback(async () => {
     if (!flipDirection) return
@@ -82,9 +79,8 @@ export const RealisticBook: React.FC<RealisticBookProps> = ({ pages, className =
     setIsFlipping(false)
     setFlipDirection(null)
     
-    // Reset controls
-    controls.set({ flipProgress: 0 })
-  }, [flipDirection, totalSpreads, flipProgress, controls])
+    // Reset controls - flipProgress is already reset above
+  }, [flipDirection, totalSpreads, flipProgress])
 
   // Handle drag gestures
   const handleDragStart = () => {
@@ -121,15 +117,13 @@ export const RealisticBook: React.FC<RealisticBookProps> = ({ pages, className =
     
     if (shouldComplete && flipDirection) {
       // Complete the flip
-      controls.start({
-        flipProgress: 1,
-        transition: { duration: 0.3, ease: 'easeOut' }
+      animate(flipProgress, 1, {
+        duration: 0.3, ease: 'easeOut'
       }).then(completeFlip)
     } else {
       // Cancel the flip
-      controls.start({
-        flipProgress: 0,
-        transition: { duration: 0.3, ease: 'easeOut' }
+      animate(flipProgress, 0, {
+        duration: 0.3, ease: 'easeOut'
       }).then(() => {
         setIsFlipping(false)
         setFlipDirection(null)
@@ -138,8 +132,8 @@ export const RealisticBook: React.FC<RealisticBookProps> = ({ pages, className =
   }
 
   // Navigation functions
-  const nextSpread = () => startFlip('next').then(completeFlip)
-  const prevSpread = () => startFlip('prev').then(completeFlip)
+  const nextSpread = useCallback(() => startFlip('next').then(completeFlip), [startFlip, completeFlip])
+  const prevSpread = useCallback(() => startFlip('prev').then(completeFlip), [startFlip, completeFlip])
 
   // Keyboard navigation
   useEffect(() => {
@@ -153,7 +147,7 @@ export const RealisticBook: React.FC<RealisticBookProps> = ({ pages, className =
 
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [currentSpread, isFlipping])
+  }, [currentSpread, isFlipping, nextSpread, prevSpread])
 
   // Get current pages for the spread
   const leftPageIndex = currentSpread * 2
