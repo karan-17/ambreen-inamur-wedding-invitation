@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui'
 import { StaggerContainer } from '@/components/animations'
@@ -13,6 +13,11 @@ export default function HomePage() {
   const weddingDate = new Date('2026-04-22T20:30:00')
   const countdown = useCountdown(weddingDate)
   const [activeSection, setActiveSection] = useState('home')
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
   
   // Wedding events data from PDF
   const events = [
@@ -61,10 +66,13 @@ export default function HomePage() {
       >
         <div className="container-width py-4">
           <div className="flex justify-center space-x-8">
-            {[{id: 'home', label: 'Home'}, {id: 'events', label: 'Events'}, {id: 'venue', label: 'Venue'}, {id: 'contact', label: 'Contact'}].map((item) => (
+            {[{id: 'home', label: 'Home'}, {id: 'events', label: 'Auspicious Moments'}, {id: 'venue', label: 'Venue'}, {id: 'contact', label: 'Contact'}].map((item) => (
               <button
                 key={item.id}
-                onClick={() => setActiveSection(item.id)}
+                onClick={() => {
+                  setActiveSection(item.id)
+                  document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' })
+                }}
                 className={`text-sm font-medium transition-colors ${
                   activeSection === item.id ? 'text-green-600' : 'text-gray-600 hover:text-green-500'
                 }`}
@@ -77,18 +85,75 @@ export default function HomePage() {
       </motion.nav>
 
       {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        {/* Islamic Geometric Background */}
-        <div className="absolute inset-0 opacity-5">
-          <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <defs>
-              <pattern id="islamic-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                <circle cx="10" cy="10" r="2" fill="currentColor" opacity="0.3" />
-                <path d="M10,2 L18,10 L10,18 L2,10 Z" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.2" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#islamic-pattern)" className="text-green-400" />
-          </svg>
+      <section ref={heroRef} id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        {/* Romantic Floating Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Floating Hearts */}
+          {[...Array(12)].map((_, i) => (
+            <motion.div
+              key={`heart-${i}`}
+              className="absolute text-green-200/20"
+              initial={{ 
+                x: 100 + (i * 80),
+                y: 800,
+                rotate: 0,
+                scale: 0.3 + (i % 3) * 0.2
+              }}
+              animate={{
+                y: -100,
+                rotate: 360,
+                x: 150 + (i * 90)
+              }}
+              transition={{
+                duration: 15 + (i % 8) * 2,
+                repeat: Infinity,
+                ease: "linear",
+                delay: i * 0.5
+              }}
+            >
+              <Heart className="w-6 h-6" fill="currentColor" />
+            </motion.div>
+          ))}
+          
+          {/* Floating Rose Petals */}
+          {[...Array(15)].map((_, i) => (
+            <motion.div
+              key={`petal-${i}`}
+              className="absolute"
+              initial={{ 
+                x: 50 + (i * 70),
+                y: -50,
+                rotate: 0,
+                opacity: 0.4
+              }}
+              animate={{
+                y: 900,
+                rotate: (i % 3) * 240,
+                x: 80 + (i * 75)
+              }}
+              transition={{
+                duration: 10 + (i % 5) * 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.8
+              }}
+            >
+              <div className="w-3 h-3 bg-gradient-to-br from-green-300/40 to-gold-300/40 rounded-full blur-sm" />
+            </motion.div>
+          ))}
+
+          {/* Islamic Geometric Background */}
+          <div className="absolute inset-0 opacity-5">
+            <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <defs>
+                <pattern id="islamic-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <circle cx="10" cy="10" r="2" fill="currentColor" opacity="0.3" />
+                  <path d="M10,2 L18,10 L10,18 L2,10 Z" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.2" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#islamic-pattern)" className="text-green-400" />
+            </svg>
+          </div>
         </div>
 
         {/* Bismillah */}
@@ -110,7 +175,7 @@ export default function HomePage() {
               transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
               className="space-y-8 mt-16"
             >
-              {/* Save the Date with Islamic elements */}
+              {/* Wedding Invitation Header */}
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -118,7 +183,7 @@ export default function HomePage() {
                 className="text-script text-2xl md:text-3xl text-green-600 mb-4 flex items-center justify-center gap-4"
               >
                 <Heart className="w-6 h-6 text-gold-500" />
-                <span>You&apos;re Invited</span>
+                <span>Wedding Invitation</span>
                 <Heart className="w-6 h-6 text-gold-500" />
               </motion.div>
 
@@ -129,7 +194,7 @@ export default function HomePage() {
                 transition={{ delay: 0.7 }}
                 className="text-sm md:text-base text-gray-600 italic max-w-2xl mx-auto mb-8"
               >
-                &quot;And We created you in pairs&quot; - Quran 78:8
+                &quot;And We created you in pairs.&quot; - Quran 78:8
               </motion.div>
 
               {/* Couple Names */}
@@ -140,7 +205,7 @@ export default function HomePage() {
                   transition={{ delay: 0.9, type: 'spring' }}
                   className="font-script text-5xl md:text-7xl lg:text-8xl bg-gradient-to-r from-green-600 via-green-500 to-emerald-600 bg-clip-text text-transparent"
                 >
-                  Ambreen Aftab
+                  Ambreen
                 </motion.h1>
                 
                 <motion.div 
@@ -150,7 +215,7 @@ export default function HomePage() {
                   className="flex items-center justify-center space-x-4 text-gold-500"
                 >
                   <div className="h-px bg-gradient-to-r from-transparent via-current to-transparent flex-1 max-w-20" />
-                  <span className="text-2xl md:text-3xl font-serif">&</span>
+                  <span className="text-2xl md:text-3xl font-serif">weds</span>
                   <div className="h-px bg-gradient-to-r from-transparent via-current to-transparent flex-1 max-w-20" />
                 </motion.div>
                 
@@ -160,20 +225,25 @@ export default function HomePage() {
                   transition={{ delay: 1.3, type: 'spring' }}
                   className="font-script text-5xl md:text-7xl lg:text-8xl bg-gradient-to-r from-green-600 via-green-500 to-emerald-600 bg-clip-text text-transparent"
                 >
-                  Inamur Rahman
+                  Inamur
                 </motion.h1>
               </div>
 
-              {/* Family Names */}
+              {/* A Cordial Invitation From */}
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.5 }}
-                className="space-y-4 text-gray-600 max-w-2xl mx-auto"
+                className="space-y-4 text-gray-700 max-w-2xl mx-auto"
               >
-                <div className="text-lg">
-                  <p><strong>Bride&apos;s Parents:</strong> Mr. Aftab Anwar & Mrs. Karishma Begum</p>
-                  <p><strong>Groom&apos;s Parents:</strong> Mr. Hifzur Rahman & Mrs. Shahnaz Fatma</p>
+                <div className="text-lg italic font-elegant mb-4">
+                  A Cordial Invitation From:
+                </div>
+                <div className="text-xl font-semibold">
+                  Mr. Aftab & Mrs. Karishma
+                </div>
+                <div className="text-sm text-gray-600">
+                  1335-A, Hindpiri, Banai Raja Lane, Ranchi, Jharkhand - 834001
                 </div>
               </motion.div>
 
@@ -204,66 +274,180 @@ export default function HomePage() {
             </motion.div>
           </AnimatePresence>
 
-          {/* Countdown Timer */}
+          {/* Creative Countdown Timer */}
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.1 }}
-            className="mt-16"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 2.1, duration: 0.8 }}
+            className="mt-16 relative"
           >
-            <Card className="max-w-4xl mx-auto bg-white/70 backdrop-blur-md border border-green-200 shadow-xl">
-              <CardContent className="p-8">
-                <h2 className="font-serif text-2xl md:text-3xl text-center mb-8 text-gray-800 flex items-center justify-center gap-3">
-                  <Clock className="w-8 h-8 text-green-600" />
-                  Counting Down to Nikah
-                </h2>
+            {/* Decorative Background Circle */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 border-4 border-green-200/30 rounded-full opacity-20"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 border-2 border-gold-200/40 rounded-full opacity-30"></div>
+            
+            <Card className="max-w-5xl mx-auto bg-gradient-to-br from-white/80 via-green-50/80 to-cream-50/80 backdrop-blur-md border-2 border-green-200/50 shadow-2xl relative overflow-hidden">
+              <CardContent className="p-10">
+                {/* Floating Hearts in Background */}
+                {[...Array(8)].map((_, i) => (
+                  <motion.div
+                    key={`countdown-heart-${i}`}
+                    className="absolute text-green-200/20"
+                    animate={{
+                      y: [0, -20, 0],
+                      x: [0, Math.sin(i) * 10, 0],
+                      rotate: [0, 180, 360]
+                    }}
+                    transition={{
+                      duration: 4 + i,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: i * 0.5
+                    }}
+                    style={{
+                      left: `${10 + i * 12}%`,
+                      top: `${20 + (i % 3) * 20}%`
+                    }}
+                  >
+                    <Heart className="w-4 h-4" fill="currentColor" />
+                  </motion.div>
+                ))}
                 
-                {!countdown.isExpired ? (
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    {[
-                      { value: countdown.days, label: 'Days' },
-                      { value: countdown.hours, label: 'Hours' },
-                      { value: countdown.minutes, label: 'Minutes' },
-                      { value: countdown.seconds, label: 'Seconds' },
-                    ].map((item, index) => (
-                      <motion.div
-                        key={item.label}
-                        initial={{ scale: 0, rotateY: 180 }}
-                        animate={{ scale: 1, rotateY: 0 }}
-                        transition={{ delay: 2.3 + index * 0.1, type: 'spring', stiffness: 100 }}
-                        whileHover={{ scale: 1.05 }}
-                        className="text-center"
-                      >
-                        <div className="bg-gradient-to-b from-green-50 to-green-100 rounded-2xl p-6 border border-green-200 shadow-lg hover:shadow-xl transition-shadow">
-                          <motion.div 
-                            key={item.value}
-                            initial={{ scale: 1.2 }}
-                            animate={{ scale: 1 }}
-                            transition={{ type: 'spring', stiffness: 300 }}
-                            className="text-4xl md:text-5xl font-bold text-green-700 font-serif"
+                <div className="text-center mb-10">
+                  <motion.h2 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 2.3 }}
+                    className="font-script text-3xl md:text-4xl text-green-700 mb-2"
+                  >
+                    Countdown to Our Nikah
+                  </motion.h2>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 2.5 }}
+                    className="text-gray-600 italic"
+                  >
+                    Insha-Allah, Wednesday 22nd April 2026 at 8:30 PM
+                  </motion.p>
+                </div>
+                
+                {isClient ? (
+                  !countdown.isExpired ? (
+                    <div className="relative">
+                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                        {[
+                          { value: countdown.days, label: 'Days', color: 'from-green-500 to-emerald-600', icon: '📅' },
+                          { value: countdown.hours, label: 'Hours', color: 'from-gold-500 to-gold-600', icon: '⏰' },
+                          { value: countdown.minutes, label: 'Minutes', color: 'from-green-600 to-green-700', icon: '⏱️' },
+                          { value: countdown.seconds, label: 'Seconds', color: 'from-emerald-500 to-emerald-700', icon: '⚡' },
+                        ].map((item, index) => (
+                          <motion.div
+                            key={item.label}
+                            initial={{ scale: 0, rotateY: 180, opacity: 0 }}
+                            animate={{ scale: 1, rotateY: 0, opacity: 1 }}
+                            transition={{ delay: 2.3 + index * 0.15, type: 'spring', stiffness: 100 }}
+                            whileHover={{ 
+                              scale: 1.05, 
+                              rotateY: 5,
+                              transition: { duration: 0.2 }
+                            }}
+                            className="text-center relative"
                           >
-                            {formatCountdownNumber(item.value)}
+                            <div className="relative group">
+                              {/* Main Card */}
+                              <div className={`bg-gradient-to-br ${item.color} rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-white/20`}>
+                                {/* Icon */}
+                                <div className="text-2xl mb-2 opacity-80">
+                                  {item.icon}
+                                </div>
+                                
+                                {/* Number */}
+                                <motion.div 
+                                  key={item.value}
+                                  initial={{ scale: 1.3, opacity: 0.8 }}
+                                  animate={{ scale: 1, opacity: 1 }}
+                                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                                  className="text-5xl md:text-6xl font-bold text-white font-serif mb-2 drop-shadow-lg"
+                                >
+                                  {formatCountdownNumber(item.value)}
+                                </motion.div>
+                                
+                                {/* Label */}
+                                <div className="text-white/90 uppercase tracking-widest text-sm font-medium">
+                                  {item.label}
+                                </div>
+                                
+                                {/* Shimmer Effect */}
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500"></div>
+                              </div>
+                            </div>
                           </motion.div>
-                          <div className="text-sm md:text-base text-green-600 uppercase tracking-widest mt-2 font-medium">
-                            {item.label}
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-center py-12">
+                      <motion.div 
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: 'spring', stiffness: 100 }}
+                        className="text-4xl md:text-6xl font-script bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-6"
+                      >
+                        Alhamdulillah! Today is the Day!
+                      </motion.div>
+                      <p className="text-xl text-gray-600 mb-4">
+                        May Allah bless this beautiful union
+                      </p>
+                      <div className="text-4xl">🤲💚</div>
+                    </div>
+                  )
+                ) : (
+                  <div className="relative">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                      {[
+                        { label: 'Days', color: 'from-green-500 to-emerald-600', icon: '📅' },
+                        { label: 'Hours', color: 'from-gold-500 to-gold-600', icon: '⏰' },
+                        { label: 'Minutes', color: 'from-green-600 to-green-700', icon: '⏱️' },
+                        { label: 'Seconds', color: 'from-emerald-500 to-emerald-700', icon: '⚡' },
+                      ].map((item, index) => (
+                        <div
+                          key={item.label}
+                          className="text-center relative"
+                        >
+                          <div className="relative group">
+                            {/* Main Card */}
+                            <div className={`bg-gradient-to-br ${item.color} rounded-3xl p-8 shadow-xl transition-all duration-300 border-2 border-white/20`}>
+                              {/* Icon */}
+                              <div className="text-2xl mb-2 opacity-80">
+                                {item.icon}
+                              </div>
+                              
+                              {/* Loading Placeholder */}
+                              <div className="text-5xl md:text-6xl font-bold text-white font-serif mb-2 drop-shadow-lg animate-pulse">
+                                --
+                              </div>
+                              
+                              {/* Label */}
+                              <div className="text-white/90 uppercase tracking-widest text-sm font-medium">
+                                {item.label}
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </motion.div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                ) : (
-                  <div className="text-center">
-                    <motion.div 
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="text-4xl md:text-6xl font-script bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-4"
-                    >
-                      Alhamdulillah! The Day is Here!
-                    </motion.div>
-                    <p className="text-xl text-gray-600">
-                      May Allah bless this beautiful union
-                    </p>
-                  </div>
+                )}
+                
+                {/* Central Decorative Element - only show when client is loaded and countdown active */}
+                {isClient && !countdown.isExpired && (
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 border-4 border-gold-300/50 rounded-full flex items-center justify-center bg-white/50 backdrop-blur-sm hidden lg:flex"
+                  >
+                    <Heart className="w-6 h-6 text-green-600" fill="currentColor" />
+                  </motion.div>
                 )}
               </CardContent>
             </Card>
@@ -330,8 +514,35 @@ export default function HomePage() {
       </section>
 
       {/* Events Section */}
-      <section ref={eventsRef} id="events" className="py-20 bg-white">
-        <div className="container-width">
+      <section ref={eventsRef} id="events" className="py-20 bg-white relative overflow-hidden">
+        {/* Floating Elements for Events Section */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={`events-float-${i}`}
+              className="absolute text-green-100/30"
+              animate={{
+                y: [0, -30, 0],
+                rotate: [0, 360],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{
+                duration: 8 + i * 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 1.5
+              }}
+              style={{
+                left: `${15 + i * 15}%`,
+                top: `${10 + (i % 2) * 60}%`
+              }}
+            >
+              <Heart className="w-8 h-8" fill="currentColor" />
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="container-width relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={eventsInView ? { opacity: 1, y: 0 } : {}}
@@ -339,10 +550,10 @@ export default function HomePage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-script bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-4">
-              Wedding Celebration
+              Auspicious Moments
             </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Join us for four beautiful days of traditional ceremonies as we celebrate our union
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto italic font-script">
+              Insha-Allah
             </p>
           </motion.div>
 
@@ -403,8 +614,36 @@ export default function HomePage() {
       </section>
 
       {/* Venue Information */}
-      <section ref={venueRef} id="venue" className="py-20 bg-gradient-to-b from-green-50 to-cream-50">
-        <div className="container-width">
+      <section ref={venueRef} id="venue" className="py-20 bg-gradient-to-b from-green-50 to-cream-50 relative overflow-hidden">
+        {/* Floating Elements for Venue Section */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={`venue-float-${i}`}
+              className="absolute"
+              animate={{
+                y: [0, -40, 0],
+                x: [0, (i % 2) * 20 - 10, 0],
+                rotate: [0, 180, 360],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{
+                duration: 12 + i * 1.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 2
+              }}
+              style={{
+                left: `${5 + i * 12}%`,
+                top: `${15 + (i % 3) * 25}%`
+              }}
+            >
+              <div className="w-4 h-4 bg-gradient-to-br from-green-200/40 to-gold-200/40 rounded-full blur-sm" />
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="container-width relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={venueInView ? { opacity: 1, y: 0 } : {}}
@@ -515,8 +754,9 @@ export default function HomePage() {
                     </div>
 
                     <div className="border-t pt-4">
-                      <p className="font-medium text-gray-800 mb-2">RSVP Contact:</p>
-                      <p className="text-gray-600">Adnan, Anwar&apos;s & Imam&apos;s</p>
+                      <p className="font-medium text-gray-800 mb-2">R.S.V.P :</p>
+                      <p className="text-gray-600">Adnan</p>
+                      <p className="text-gray-600">Anwar&apos;s & Imam&apos;s</p>
                     </div>
 
                     <div className="border-t pt-4">
@@ -535,12 +775,27 @@ export default function HomePage() {
             >
               <Card className="h-full p-8 bg-gradient-to-br from-cream-50 to-white border border-cream-200">
                 <CardContent className="space-y-6">
-                  <h3 className="text-2xl font-serif text-green-700 mb-6">Wedding Wishes</h3>
+                  <h3 className="text-2xl font-serif text-green-700 mb-6">Blessings & Invitation</h3>
                   
-                  <div className="space-y-4 text-center">
+                  <div className="space-y-6 text-center">
+                    <div className="p-4 bg-gradient-to-br from-green-50 to-cream-50 rounded-xl border border-green-100">
+                      <p className="text-sm text-gray-600 italic mb-2">
+                        &quot;In The name of &apos;ALLAH&apos; the most beneficent & merciful&quot;
+                      </p>
+                    </div>
+
+                    <div className="p-6 bg-gradient-to-br from-cream-50 to-gold-50 rounded-2xl border border-gold-200">
+                      <p className="text-base text-gray-700 font-medium mb-3">
+                        Mrs. Kaniza Begum W/o Lt. Mr. Khurshid Anwar
+                      </p>
+                      <p className="text-lg text-green-700 font-elegant">
+                        request your presence for the <strong>NIKAH</strong> of their beloved grand daughter
+                      </p>
+                    </div>
+
                     <motion.div
                       animate={{ scale: [1, 1.05, 1] }}
-                      transition={{ repeat: Infinity, duration: 3 }}
+                      transition={{ repeat: Infinity, duration: 4 }}
                       className="p-6 bg-green-50 rounded-2xl border border-green-100"
                     >
                       <p className="text-lg font-arabic text-green-700 mb-2">
@@ -552,18 +807,16 @@ export default function HomePage() {
                     </motion.div>
 
                     <div className="space-y-3">
-                      <p className="text-gray-600 italic">
-                        &quot;Your presence is the greatest gift we could ask for as we begin this beautiful journey together.&quot;
+                      <p className="font-script text-2xl text-green-600">
+                        Ambreen Aftab
                       </p>
-                      
-                      <div className="pt-4">
-                        <p className="font-script text-2xl text-green-600">
-                          Ambreen & Inamur
-                        </p>
-                        <p className="text-sm text-gray-500 mt-1">
-                          With love and duas from both families
-                        </p>
-                      </div>
+                      <p className="text-gray-600 text-sm">D/o Mr. Aftab Anwar & Mrs. Karishma Begum</p>
+                      <p className="text-lg font-elegant text-gray-700">with</p>
+                      <p className="font-script text-2xl text-green-600">
+                        Inamur Rahman
+                      </p>
+                      <p className="text-gray-600 text-sm">S/o Mr. Hifzur Rahman & Mrs. Shahnaz Fatma</p>
+                      <p className="text-gray-600 text-sm">Bukhara Road, Bijnor (UP)</p>
                     </div>
                   </div>
                 </CardContent>
@@ -574,7 +827,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-r from-green-800 to-emerald-800 text-white py-12">
+      <footer className="bg-gradient-to-r from-green-800 to-emerald-800 py-12">
         <div className="container-width">
           <motion.div
             initial={{ opacity: 0 }}
@@ -583,21 +836,21 @@ export default function HomePage() {
             className="text-center space-y-6"
           >
             <div className="space-y-2">
-              <p className="text-lg font-arabic">
+              <p className="text-lg font-arabic text-cream-100">
                 الحمد لله رب العالمين
               </p>
-              <p className="text-sm opacity-90">
+              <p className="text-sm text-cream-200">
                 All praise is due to Allah, Lord of all the worlds
               </p>
             </div>
 
             <div className="flex items-center justify-center space-x-4 text-sm">
               <Heart className="w-4 h-4 text-gold-300" />
-              <span className="opacity-90">April 22, 2026 | Ranchi, Jharkhand</span>
+              <span className="text-cream-200">April 22, 2026 | Ranchi, Jharkhand</span>
               <Heart className="w-4 h-4 text-gold-300" />
             </div>
 
-            <p className="text-xs opacity-75">
+            <p className="text-xs text-cream-300">
               Created with love for Ambreen & Inamur&apos;s Wedding
             </p>
           </motion.div>
