@@ -655,7 +655,7 @@ export default function HomePage() {
             </h2>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="max-w-4xl mx-auto grid lg:grid-cols-1 gap-12 items-center"> {/* Make it a single column with small size only */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={venueInView ? { opacity: 1, x: 0 } : {}}
@@ -689,7 +689,7 @@ export default function HomePage() {
               </Card>
             </motion.div>
 
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={venueInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: 0.5, duration: 0.8 }}
@@ -712,7 +712,7 @@ export default function HomePage() {
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </motion.div> */}
           </div>
         </div>
       </section>
@@ -729,19 +729,19 @@ export default function HomePage() {
             <h2 className="text-4xl md:text-5xl font-script bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-4">
               Contact & RSVP
             </h2>
-            <p className="text-gray-600 text-lg">
+            {/* <p className="text-gray-600 text-lg">
               Please confirm your presence to help us arrange accordingly
-            </p>
+            </p> */}
           </motion.div>
 
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-12">
+          <div className="max-w-xl mx-auto grid md:grid-cols-1 gap-12">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
             >
               <Card className="h-full p-8 bg-gradient-to-br from-green-50 to-white border border-green-200">
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-6 h-96">
                   <h3 className="text-2xl font-serif text-green-700 mb-6">Contact Information</h3>
                   
                   <div className="space-y-4">
@@ -768,7 +768,7 @@ export default function HomePage() {
               </Card>
             </motion.div>
 
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.5 }}
@@ -821,7 +821,7 @@ export default function HomePage() {
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </motion.div> */}
           </div>
         </div>
       </section>
