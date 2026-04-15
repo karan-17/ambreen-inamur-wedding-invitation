@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import type { Icon } from 'leaflet'
+import 'leaflet/dist/leaflet.css'
 
 // Dynamically import the map components to avoid SSR issues
 const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false })
@@ -29,10 +30,9 @@ const MapComponent = ({ center, zoom = 15, height = '12rem', address, title, cla
     // Only run this on client side
     if (typeof window !== 'undefined') {
       import('leaflet').then((L) => {
-        import('leaflet/dist/leaflet.css')
         
         // Fix for default markers in react-leaflet
-        delete (L.Icon.Default.prototype as unknown as { _getIconUrl?: unknown })._getIconUrl
+        delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl
         L.Icon.Default.mergeOptions({
           iconRetinaUrl: '/leaflet-images/marker-icon-2x.png',
           iconUrl: '/leaflet-images/marker-icon.png',
