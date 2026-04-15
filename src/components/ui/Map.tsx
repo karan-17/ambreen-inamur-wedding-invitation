@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
+import type { Icon } from 'leaflet'
 
 // Dynamically import the map components to avoid SSR issues
 const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false })
@@ -18,9 +19,9 @@ interface MapProps {
   className?: string
 }
 
-const Map = ({ center, zoom = 15, height = '12rem', address, title, className = '' }: MapProps) => {
+const MapComponent = ({ center, zoom = 15, height = '12rem', address, title, className = '' }: MapProps) => {
   const [isMounted, setIsMounted] = useState(false)
-  const [customIcon, setCustomIcon] = useState<any>(null)
+  const [customIcon, setCustomIcon] = useState<Icon | null>(null)
 
   useEffect(() => {
     setIsMounted(true)
@@ -31,7 +32,7 @@ const Map = ({ center, zoom = 15, height = '12rem', address, title, className = 
         import('leaflet/dist/leaflet.css')
         
         // Fix for default markers in react-leaflet
-        delete (L.Icon.Default.prototype as any)._getIconUrl
+        delete (L.Icon.Default.prototype as unknown as { _getIconUrl?: unknown })._getIconUrl
         L.Icon.Default.mergeOptions({
           iconRetinaUrl: '/leaflet-images/marker-icon-2x.png',
           iconUrl: '/leaflet-images/marker-icon.png',
@@ -86,4 +87,4 @@ const Map = ({ center, zoom = 15, height = '12rem', address, title, className = 
   )
 }
 
-export default Map
+export default MapComponent
