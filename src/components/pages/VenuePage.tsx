@@ -72,10 +72,10 @@ export const VenuePage: React.FC = () => {
                   <h4 className="text-xl font-serif text-green-700 mb-3">Host Family</h4>
                   <div className="space-y-2 text-gray-600">
                     <p><strong>Mr. Aftab Anwar & Mrs. Karishma Begum</strong></p>
-                    <p className="flex items-start gap-2">
+                    {/* <p className="flex items-start gap-2">
                       <MapPin className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
                       1335-A, Hindpiri, Banai Raja Lane, Ranchi, Jharkhand - 834001
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               </CardContent>

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Card, CardContent } from '@/components/ui'
+import { Card, CardContent, Map } from '@/components/ui'
 import { StaggerContainer } from '@/components/animations'
 import { useCountdown, useScrollAnimation } from '@/hooks'
 import { formatCountdownNumber } from '@/utils'
@@ -25,14 +25,20 @@ export default function HomePage() {
       title: 'Haldi Ceremony',
       date: 'Monday, 20th April 2026',
       time: '4:00 PM',
-      venue: 'At Our Residence',
+      venue: 'Flagship Hotel The Flora',
+      address: 'Flagship Hotel The Flora',
+      mapUrl: 'https://maps.app.goo.gl/7uXJTSbgpWMAzasp8',
+      coordinates: [23.4026432, 85.3648456] as [number, number],
       description: 'Traditional turmeric ceremony'
     },
     {
       title: 'Mehndi Ceremony', 
       date: 'Tuesday, 21st April 2026',
       time: '6:00 PM',
-      venue: 'At Our Residence',
+      venue: 'Flagship Hotel The Flora',
+      address: 'Flagship Hotel The Flora',
+      mapUrl: 'https://maps.app.goo.gl/7uXJTSbgpWMAzasp8',
+      coordinates: [23.4026432, 85.3648456] as [number, number],
       description: 'Henna celebration with music and dance'
     },
     {
@@ -40,6 +46,9 @@ export default function HomePage() {
       date: 'Wednesday, 22nd April 2026', 
       time: 'Baraat: 8:00 PM | Nikah: 8:30 PM | Dinner: 9:00 PM',
       venue: 'PUJA SHREE MARRIAGE HOUSE',
+      address: 'Near Shiv Mandir, Bariatu, Ranchi, Jharkhand - 834009',
+      mapUrl: 'https://maps.app.goo.gl/gSKs58TNDxM3jTdT7?g_st=ic',
+      coordinates: [23.3440, 85.3100] as [number, number],
       description: 'Main wedding ceremony and celebration',
       isMain: true
     },
@@ -47,7 +56,10 @@ export default function HomePage() {
       title: 'Rukhsati Ceremony',
       date: 'Thursday, 23rd April 2026',
       time: '12:00 PM (Noon)',
-      venue: 'PUJA SHREE MARRIAGE HOUSE', 
+      venue: 'PUJA SHREE MARRIAGE HOUSE',
+      address: 'Near Shiv Mandir, Bariatu, Ranchi, Jharkhand - 834009',
+      mapUrl: 'https://maps.app.goo.gl/gSKs58TNDxM3jTdT7?g_st=ic',
+      coordinates: [23.3440, 85.3100] as [number, number],
       description: 'Farewell ceremony'
     }
   ]
@@ -606,6 +618,30 @@ export default function HomePage() {
                   </div>
                   
                   <p className="text-gray-600 italic">{event.description}</p>
+                  
+                  {event.coordinates && (
+                    <div className="mt-6 space-y-3">
+                      <Map
+                        center={event.coordinates}
+                        zoom={16}
+                        height="12rem"
+                        address={event.address || event.venue}
+                        title={event.title}
+                        className="shadow-sm"
+                      />
+                      <div className="text-center">
+                        <a
+                          href={event.mapUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 transition-colors"
+                        >
+                          <MapPin className="w-4 h-4" />
+                          View on Google Maps
+                        </a>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </motion.div>
             ))}
@@ -655,65 +691,115 @@ export default function HomePage() {
             </h2>
           </motion.div>
 
-          <div className="max-w-4xl mx-auto grid lg:grid-cols-1 gap-12 items-center"> {/* Make it a single column with small size only */}
+          <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-start">
+            {/* Flagship Hotel - Haldi & Mehndi */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={venueInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="space-y-8"
+              className="space-y-6"
             >
-              <Card className="p-8 bg-white/70 backdrop-blur-md border border-green-200">
+              <Card className="p-6 bg-white/70 backdrop-blur-md border border-green-200">
                 <CardContent className="space-y-6">
                   <div>
-                    <h3 className="text-2xl font-serif text-green-700 mb-4">Main Ceremony Venue</h3>
+                    <h3 className="text-xl font-serif text-green-700 mb-4">Haldi & Mehndi Ceremonies</h3>
                     <div className="space-y-3">
-                      <p className="text-lg font-semibold text-gray-800">PUJA SHREE MARRIAGE HOUSE</p>
+                      <p className="text-lg font-semibold text-gray-800">Flagship Hotel The Flora</p>
                       <p className="text-gray-600 flex items-start gap-2">
                         <MapPin className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                        Near Shiv Mandir, Bariatu, Ranchi, Jharkhand - 834001
+                        Flagship Hotel The Flora
                       </p>
                     </div>
                   </div>
-
-                  <div className="border-t pt-6">
-                    <h4 className="text-xl font-serif text-green-700 mb-3">Host Family</h4>
-                    <div className="space-y-2 text-gray-600">
-                      <p><strong>Mr. Aftab Anwar & Mrs. Karishma Begum</strong></p>
-                      <p className="flex items-start gap-2">
-                        <MapPin className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
-                        1335-A, Hindpiri, Banai Raja Lane, Ranchi, Jharkhand - 834001
-                      </p>
+                  
+                  <div className="space-y-3">
+                    <Map
+                      center={[23.4026432, 85.3648456]}
+                      zoom={15}
+                      height="10rem"
+                      address="Flagship Hotel The Flora"
+                      title="Haldi & Mehndi Venue"
+                      className="shadow-sm"
+                    />
+                    <div className="text-center">
+                      <a
+                        href="https://maps.app.goo.gl/7uXJTSbgpWMAzasp8"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 transition-colors text-sm"
+                      >
+                        <MapPin className="w-4 h-4" />
+                        View on Google Maps
+                      </a>
                     </div>
                   </div>
                 </CardContent>
               </Card>
             </motion.div>
 
-            {/* <motion.div
+            {/* Puja Shree Marriage House - Nikah & Rukhsati */}
+            <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={venueInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="space-y-8"
+              className="space-y-6"
             >
-              <Card className="p-8 bg-white/70 backdrop-blur-md border border-green-200">
+              <Card className="p-6 bg-white/70 backdrop-blur-md border border-green-200">
                 <CardContent className="space-y-6">
-                  <h3 className="text-2xl font-serif text-green-700 mb-4">Special Notes</h3>
-                  
-                  <div className="space-y-4 text-gray-600">
-                    <div className="p-4 bg-green-50 rounded-lg border border-green-100">
-                      <p className="font-medium text-green-700">Mehndi Ceremony</p>
-                      <p>Will be held at the bride&apos;s family residence</p>
+                  <div>
+                    <h3 className="text-xl font-serif text-green-700 mb-4">Nikah & Rukhsati Ceremonies</h3>
+                    <div className="space-y-3">
+                      <p className="text-lg font-semibold text-gray-800">PUJA SHREE MARRIAGE HOUSE</p>
+                      <p className="text-gray-600 flex items-start gap-2">
+                        <MapPin className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        Near Shiv Mandir, Bariatu, Ranchi, Jharkhand - 834009
+                      </p>
                     </div>
-                    
-                    <div className="p-4 bg-cream-50 rounded-lg border border-cream-200">
-                      <p className="font-medium text-gray-700">Accommodation</p>
-                      <p>Please contact host family for accommodation arrangements</p>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <Map
+                      center={[23.3440, 85.3100]}
+                      zoom={15}
+                      height="10rem"
+                      address="Near Shiv Mandir, Bariatu, Ranchi, Jharkhand - 834009"
+                      title="Nikah & Rukhsati Venue"
+                      className="shadow-sm"
+                    />
+                    <div className="text-center">
+                      <a
+                        href="https://maps.app.goo.gl/gSKs58TNDxM3jTdT7?g_st=ic"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 transition-colors text-sm"
+                      >
+                        <MapPin className="w-4 h-4" />
+                        View on Google Maps
+                      </a>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-            </motion.div> */}
+            </motion.div>
           </div>
+
+          {/* Host Family Information */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={venueInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.7, duration: 0.8 }}
+            className="mt-12 max-w-2xl mx-auto"
+          >
+            <Card className="p-6 bg-gradient-to-br from-cream-50 to-white border border-green-200">
+              <CardContent className="text-center space-y-4">
+                <h4 className="text-xl font-serif text-green-700">Host Family</h4>
+                <div className="text-gray-600">
+                  <p className="font-semibold">Mr. Aftab Anwar & Mrs. Karishma Begum</p>
+                  {/* <p className="text-sm mt-2">1335-A, Hindpiri, Banai Raja Lane, Ranchi, Jharkhand - 834001</p> */}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
         </div>
       </section>
 
